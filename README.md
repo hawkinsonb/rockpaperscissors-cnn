@@ -41,3 +41,7 @@ Let's create the Virtual Environment:
 #### 4) Install the required dependencies with:
 
 `pip3 install -r requirements.txt`
+
+#### To deactivate your venv:
+
+`deactivate`
