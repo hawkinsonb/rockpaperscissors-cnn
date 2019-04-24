@@ -3,3 +3,4 @@ saved_models/
 venv/
 *.py[cod]
 *$py.class
+data/rps
