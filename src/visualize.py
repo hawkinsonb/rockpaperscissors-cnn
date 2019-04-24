@@ -25,7 +25,7 @@ def visualize_input(img, ax):
 
 
 # Load a color image in grayscale
-image = imread('../data/rps/paper/20190403_143158.jpg', as_grey=True)
+image = imread('../data/resized/128/paper/2019-04-03_13-17-45_1.jpg', as_grey=True)
 image = resize(image, (64, 64), mode='reflect')
 print('This image is: ', type(image),
       'with dimensions:', image.shape)
