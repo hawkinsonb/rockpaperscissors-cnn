@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:tflite/tflite.dart';
+import 'dart:io';
+import 'package:image/image.dart' as ImageFluxer;
+import 'package:path_provider/path_provider.dart';
 
 List<CameraDescription> cameras;
 
@@ -10,8 +14,23 @@ Future<void> main() async {
     cameras = await availableCameras();
   } on CameraException catch (e) {
     logError(e.code, e.description);
+    String res = await _loadModel();
+    print(res);
   }
   runApp(MyApp());
+}
+
+Future<Null> _loadModel() async {
+  try {
+    String res = await Tflite.loadModel(
+    model: "assets/rps.tflite",
+    labels: "assets/labels.txt",
+    numThreads: 1); // defaults to 1
+    print(res);
+  } catch(e) {
+    print('Error: $e.code\nError Message: $e.message');
+  }
+
 }
 
 class MyApp extends StatelessWidget {
@@ -57,24 +76,53 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  void appLogic(String filePath) {
+      var recognitions = Tflite.runModelOnImage(
+          path: filePath
+      );
+
+      print(recognitions);
+  }
+
   void _takePicturePressed() {
-    _takePicture().then((String filePath) {
+    takePicture().then((String filePath) {
       if (mounted) {
-        
+        print("US" + filePath);
+        ImageFluxer.Image img = ImageFluxer.decodeImage(new File(filePath).readAsBytesSync());
+
+        ImageFluxer.Image smallImage = ImageFluxer.copyResize(img, 128);
+
+        new File(filePath).writeAsBytesSync(ImageFluxer.encodePng(smallImage));
       }
+      appLogic(filePath);
     });
   }
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
-  Future<String> _takePicture() async {
+  Future<String> takePicture() async {
     if (!_controller.value.isInitialized) {
       print("Controller is not initialized");
       return null;
     }
-    print("Save the image");
+    
+    final Directory extDir = await getApplicationDocumentsDirectory();
+    final String dirPath = '${extDir.path}/Pictures/flutter_test';
+    await Directory(dirPath).create(recursive: true);
+    final String filePath = '$dirPath/${timestamp()}.jpg';
 
-    return "";
+    if (_controller.value.isTakingPicture) {
+      // A capture is already pending, do nothing.
+      return null;
+    }
+
+    try {
+      await _controller.takePicture(filePath);
+    } on CameraException catch (e) {
+      logError(e.code, e.description);
+      return null;
+    }
+    return filePath;
   }
 
   @override
