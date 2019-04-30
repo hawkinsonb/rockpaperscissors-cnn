@@ -48,10 +48,11 @@ model.add(Dropout(0.6))
 model.add(Dense(500, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
-model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',
+              optimizer='rmsprop', metrics=['accuracy'])
 
 # train the model
-model.fit(x_train, y_train, batch_size=32, epochs=8,
+model.fit(x_train, y_train, batch_size=32, epochs=30,
           validation_data=(x_valid, y_valid), verbose=1, shuffle=True)
 
 # Save model and weights
