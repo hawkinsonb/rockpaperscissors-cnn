@@ -15,6 +15,7 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 num_channels = 3
 img_size = 128
 batch_size = 32
+_epochs = 30
 
 input_shape = (img_size, img_size, num_channels)
 
@@ -26,27 +27,29 @@ checkpoint_dir = "./saved_models"
 
 # pp.plot_images(images,img_size, num_channels, cls_true)
 
-datagen_args = dict(#rotation_range=90,
-                    #width_shift_range=0.1,
-                    #height_shift_range=0.1,
+datagen_args = dict(rotation_range=90,
+                    # width_shift_range=0.1,
+                    # height_shift_range=0.1,
                     rescale=1./255,
-                    #zoom_range=0.2,
-                    #shear_range=0.1,
-                    #brightness_range=(1.0, 1.5),
+                    # zoom_range=0.2,
+                    # shear_range=0.1,
+                    brightness_range=(1.0, 1.5),
                     validation_split=0.10,
                     horizontal_flip=True,
                     vertical_flip=True)
 
 flow_args = dict(color_mode='rgb',
-                classes=classes,
-                target_size=(img_size, img_size),
-                batch_size=batch_size,
-                class_mode='categorical')
+                 classes=classes,
+                 target_size=(img_size, img_size),
+                 batch_size=batch_size,
+                 class_mode='categorical')
 
 train_datagen = ImageDataGenerator(**datagen_args)
 
-train_flow = train_datagen.flow_from_directory(train_path, subset='training', **flow_args)
-validation_flow = train_datagen.flow_from_directory(train_path, subset='validation', **flow_args)
+train_flow = train_datagen.flow_from_directory(
+    train_path, subset='training', **flow_args)
+validation_flow = train_datagen.flow_from_directory(
+    train_path, subset='validation', **flow_args)
 
 steps_per_epoch = len(train_flow.filenames) // batch_size
 validation_steps = len(validation_flow.filenames) // batch_size
@@ -66,10 +69,11 @@ model.add(Dropout(0.4))
 model.add(Dense(500, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
-model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',
+              optimizer='rmsprop', metrics=['accuracy'])
 
 model.fit_generator(generator=train_flow, validation_data=validation_flow,
-            validation_steps=validation_steps,steps_per_epoch=steps_per_epoch, epochs=8)
+                    validation_steps=validation_steps, steps_per_epoch=steps_per_epoch, epochs=_epochs)
 
 # Save model and weights
 save_dir = os.path.join(os.getcwd(), 'saved_models')
