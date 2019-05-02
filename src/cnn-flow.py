@@ -16,7 +16,7 @@ from keras.callbacks import ModelCheckpoint
 num_channels = 3
 img_size = 128
 batch_size = 32
-_epochs = 500
+_epochs = 30
 
 input_shape = (img_size, img_size, num_channels)
 
@@ -35,7 +35,7 @@ datagen_args = dict(rotation_range=90,
                     # zoom_range=0.2,
                     # shear_range=0.1,
                     brightness_range=(1.0, 1.5),
-                    validation_split=0.30,
+                    validation_split=0.25,
                     horizontal_flip=True,
                     vertical_flip=True)
 
@@ -69,7 +69,10 @@ model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=128, kernel_size=2,
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.4))
+model.add(Conv2D(filters=256, kernel_size=2,
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.2))
 model.add(Flatten())
 model.add(Dropout(0.4))
 model.add(Dense(500, activation='relu'))

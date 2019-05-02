@@ -1,6 +1,6 @@
 __pycache__/
-saved_models/
 venv/
 *.py[cod]
 *$py.class
 data/rps
+floyd.yml
