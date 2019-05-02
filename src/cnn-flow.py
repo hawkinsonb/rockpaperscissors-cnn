@@ -10,12 +10,13 @@ from keras.utils import np_utils
 from keras.models import Sequential
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from keras.callbacks import ModelCheckpoint
 
 
 num_channels = 3
 img_size = 128
 batch_size = 32
-_epochs = 30
+_epochs = 500
 
 input_shape = (img_size, img_size, num_channels)
 
@@ -34,7 +35,7 @@ datagen_args = dict(rotation_range=90,
                     # zoom_range=0.2,
                     # shear_range=0.1,
                     brightness_range=(1.0, 1.5),
-                    validation_split=0.10,
+                    validation_split=0.30,
                     horizontal_flip=True,
                     vertical_flip=True)
 
@@ -77,8 +78,12 @@ model.add(Dense(3, activation='softmax'))
 model.compile(loss='categorical_crossentropy',
               optimizer='rmsprop', metrics=['accuracy'])
 
+filepath = "saved_models/rps-flow.h5"
+checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+callbacks_list = [checkpoint]
+
 model.fit_generator(generator=train_flow, validation_data=validation_flow,
-                    validation_steps=validation_steps, steps_per_epoch=steps_per_epoch, epochs=_epochs)
+                    validation_steps=validation_steps, steps_per_epoch=steps_per_epoch, epochs=_epochs, callbacks=callbacks_list)
 
 # Save model and weights
 save_dir = os.path.join(os.getcwd(), 'saved_models')
