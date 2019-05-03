@@ -14,14 +14,14 @@ from keras.callbacks import ModelCheckpoint
 
 num_channels = 3
 img_size = 128
-input_shape = (img_size, img_size, num_channels)
+input_shape = (num_channels, img_size, img_size)
 
 classes = ['rock', 'paper', 'scissors']
 
 train_path = '../data/augmented'
 checkpoint_dir = "./saved_models"
 
-validation_size = 0.2
+validation_size = 0.5
 
 # load image data and labels
 data = pp.read_train_sets(train_path, img_size, classes,
@@ -54,24 +54,8 @@ model.add(Conv2D(filters=8, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.3))
-model.add(Conv2D(filters=12, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
-model.add(Conv2D(filters=16, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
-model.add(Conv2D(filters=20, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
-model.add(Conv2D(filters=32, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
+model.add(Dense(512, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
 opt = keras.optimizers.RMSprop(lr=1e-04, decay=1e-6)
