@@ -21,7 +21,7 @@ classes = ['rock', 'paper', 'scissors']
 train_path = '../data/augmented'
 checkpoint_dir = "./saved_models"
 
-validation_size = 0.6
+validation_size = 0.2
 
 # load image data and labels
 data = pp.read_train_sets(train_path, img_size, classes,
@@ -42,32 +42,53 @@ callbacks_list = [checkpoint]
 # define the model
 model = Sequential()
 
-model.add(Conv2D(filters=16, kernel_size=(3, 3), padding='same', activation='relu',
+model.add(Conv2D(filters=1, kernel_size=(3, 3), padding='same', activation='relu',
                  input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=32, kernel_size=(3, 3),
+model.add(Conv2D(filters=2, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=64, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.6))
-model.add(Conv2D(filters=128, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=256, kernel_size=(3, 3),
+model.add(Conv2D(filters=3, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.4))
-model.add(Conv2D(filters=512, kernel_size=(3, 3),
+model.add(Conv2D(filters=4, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=1024, kernel_size=(3, 3),
+model.add(Conv2D(filters=5, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.2))
-model.add(Dense(512, activation='relu'))
+model.add(Dropout(0.4))
+model.add(Conv2D(filters=6, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Conv2D(filters=8, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.4))
+model.add(Conv2D(filters=10, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=1))
+model.add(Conv2D(filters=12, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=1))
+model.add(Dropout(0.4))
+model.add(Conv2D(filters=16, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=1))
+model.add(Conv2D(filters=20, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=1))
+model.add(Dropout(0.6))
+model.add(Conv2D(filters=24, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=1))
+model.add(Conv2D(filters=36, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=1))
 model.add(Flatten())
+model.add(Dropout(0.8))
+model.add(Dense(128, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
 opt = keras.optimizers.RMSprop(lr=1e-04, decay=1e-6)
