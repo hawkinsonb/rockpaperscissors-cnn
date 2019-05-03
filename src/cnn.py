@@ -87,7 +87,7 @@ print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 
 # train the model
 model.fit(x_train, y_train, batch_size=32, epochs=30,
-          validation_data=(x_valid, y_valid), verbose=1, shuffle=True)
+          validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
 
 # Save model and weights
 save_dir = os.path.join(os.getcwd(), checkpoint_dir)
