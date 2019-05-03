@@ -45,27 +45,19 @@ model = Sequential()
 model.add(Conv2D(filters=2, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
 model.add(Conv2D(filters=4, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
 model.add(Conv2D(filters=8, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
-model.add(Conv2D(filters=12, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.3))
 model.add(Conv2D(filters=16, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
 model.add(Conv2D(filters=20, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.3))
 model.add(Conv2D(filters=32, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
