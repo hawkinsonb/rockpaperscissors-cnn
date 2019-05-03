@@ -18,10 +18,10 @@ input_shape = (img_size, img_size, num_channels)
 
 classes = ['rock', 'paper', 'scissors']
 
-train_path = '../data/resized/' + str(img_size)
+train_path = '../data/augmented'
 checkpoint_dir = "./saved_models"
 
-validation_size = 0.5
+validation_size = 0.6
 
 # load image data and labels
 data = pp.read_train_sets(train_path, img_size, classes,
@@ -31,8 +31,8 @@ x_train, y_train = data.train._images, data.train._labels
 x_valid, y_valid = data.valid._images, data.valid._labels
 
 # split validation into training and validation sets
-x_test, y_test = x_valid[:500], y_valid[:500]
-x_valid, y_valid = x_valid[500:], y_valid[500:]
+x_test, y_test = x_valid[:1000], y_valid[:1000]
+x_valid, y_valid = x_valid[1000:], y_valid[1000:]
 
 filepath = "saved_models/rps.h5"
 checkpoint = ModelCheckpoint(
@@ -51,22 +51,24 @@ model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=64, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.6))
 model.add(Conv2D(filters=128, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=256, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.4))
 model.add(Conv2D(filters=512, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=1024, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-
+model.add(Conv2D(filters=2048, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.2))
-model.add(Flatten())
-model.add(Dropout(0.4))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
@@ -86,8 +88,8 @@ loss, acc = model.evaluate(x_train, y_train)
 print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 
 # train the model
-model.fit(x_train, y_train, batch_size=64, epochs=30,
-          validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
+model.fit_generator(x_train, y_train, batch_size=2048, epochs=500,
+                    validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
 
 # Save model and weights
 save_dir = os.path.join(os.getcwd(), checkpoint_dir)
@@ -99,6 +101,6 @@ model.save(model_path)
 print('Saved trained model at %s ' % model_path)
 
 # test and display results
-score = model.evaluate(x_test, y_test, batch_size=32, verbose=1)
+score = model.evaluate(x_test, y_test, batch_size=128, verbose=1)
 print('Test score:', score[0])
 print('Test accuracy:', score[1])
