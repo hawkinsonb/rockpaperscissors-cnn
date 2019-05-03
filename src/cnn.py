@@ -42,11 +42,6 @@ callbacks_list = [checkpoint]
 # define the model
 model = Sequential()
 
-# Load checkpoint
-model.load_weights(filepath)
-loss, acc = model.evaluate(x_train, y_train)
-print("Restored model, accuracy: {:5.2f}%".format(100*acc))
-
 model.add(Conv2D(filters=16, kernel_size=(3, 3), padding='same', activation='relu',
                  input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=2))
@@ -69,8 +64,6 @@ model.add(Conv2D(filters=1024, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 
-model.
-
 model.add(Dropout(0.2))
 model.add(Flatten())
 model.add(Dropout(0.4))
@@ -87,6 +80,10 @@ filepath = "saved_models/rps.h5"
 checkpoint = ModelCheckpoint(
     filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
+
+model.load_weights(filepath)
+loss, acc = model.evaluate(x_train, y_train)
+print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 
 # train the model
 model.fit(x_train, y_train, batch_size=32, epochs=30,
