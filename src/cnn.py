@@ -42,30 +42,35 @@ callbacks_list = [checkpoint]
 # define the model
 model = Sequential()
 
-model.add(Conv2D(filters=1, kernel_size=(3, 3), padding='same', activation='relu',
-                 input_shape=input_shape))
-model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=2, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=3, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.4))
+model.add(Dropout(0.3))
 model.add(Conv2D(filters=4, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=5, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.4))
-model.add(Conv2D(filters=6, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.3))
 model.add(Conv2D(filters=8, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(0.4))
+model.add(Dropout(0.3))
+model.add(Conv2D(filters=12, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.3))
+model.add(Conv2D(filters=16, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.3))
+model.add(Conv2D(filters=20, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.3))
+model.add(Conv2D(filters=32, kernel_size=(3, 3),
+                 padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
+model.add(Dropout(0.3))
+model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
@@ -86,7 +91,7 @@ if (os.path.isfile(filepath)):
     print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 
 # train the model
-model.fit(x_train, y_train, batch_size=2048, epochs=500,
+model.fit(x_train, y_train, batch_size=2048, epochs=1000,
           validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
 
 # Save model and weights
