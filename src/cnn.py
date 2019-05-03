@@ -65,10 +65,9 @@ model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=1024, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=2048, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(512, activation='relu'))
+model.add(Flatten())
 model.add(Dense(3, activation='softmax'))
 
 opt = keras.optimizers.RMSprop(lr=1e-04, decay=1e-6)
