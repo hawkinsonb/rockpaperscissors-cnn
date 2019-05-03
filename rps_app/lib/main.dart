@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    _controller = CameraController(cameras[0], ResolutionPreset.high);
+    _controller = CameraController(cameras[0], ResolutionPreset.low);
     _controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -81,12 +81,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future appLogic(String filePath) async {
+    String res = await Tflite.loadModel(
+        model: "assets/rps.tflite",
+        labels: "assets/labels.txt",
+    );
   
     var recognitions = await Tflite.runModelOnImage(
       path: filePath,
     );
 
     _prediction = recognitions.elementAt(0)["label"];
+    print(_prediction);
 
     var rng = new Random();
     var guess = rng.nextInt(100);
@@ -126,8 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ImageFluxer.decodeImage(new File(filePath).readAsBytesSync());
 
         ImageFluxer.Image smallImage = ImageFluxer.copyResize(img, 128);
+        smallImage = ImageFluxer.
 
-        new File(filePath).writeAsBytesSync(ImageFluxer.encodeJpg(smallImage));
+        new File(filePath).writeAsBytesSync(ImageFluxer.encodeJpg(smallImage, {int quality: 100}));
       }
       appLogic(filePath);
     });
@@ -167,6 +173,42 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
+      body: Center( child: Container( child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(10.0),
+              width: 400.0,
+              height: 400.0,
+              child: AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: CameraPreview(_controller),
+              ),
+            ),
+            Container(
+              child: Expanded(flex: 1, child: Text("You picked: $_prediction")),
+            ),
+            Container(
+              child: Expanded(flex: 1, child: Text("Computer picked: $_random")),
+            ),
+            Container(
+              child: Expanded(flex: 1, child: Text("$_state")),
+            ),
+          ]
+        ),
+      ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _takePicturePressed,
+        child: const Icon(
+          Icons.camera,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+    );
+/*
+    return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -195,6 +237,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-    );
+    );*/
   }
 }
