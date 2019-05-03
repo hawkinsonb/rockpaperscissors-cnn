@@ -58,7 +58,7 @@ def load_train(train_path, image_size, classes):
         for fl in files:
             image = imread(fl)
             image = image[:, :, :3]
-            image = resize(image, (image_size, image_size))
+            image = image / 255
             images.append(image)
             label = np.zeros(len(classes))
             label[index] = 1.0
