@@ -67,7 +67,6 @@ model.add(Conv2D(filters=1024, kernel_size=(3, 3),
 model.add(MaxPooling2D(pool_size=2))
 model.add(Conv2D(filters=2048, kernel_size=(3, 3),
                  padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.2))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(3, activation='softmax'))
@@ -83,13 +82,14 @@ checkpoint = ModelCheckpoint(
     filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 
-model.load_weights(filepath)
-loss, acc = model.evaluate(x_train, y_train)
-print("Restored model, accuracy: {:5.2f}%".format(100*acc))
+if (os.path.isfile(filepath)):
+    model.load_weights(filepath)
+    loss, acc = model.evaluate(x_train, y_train)
+    print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 
 # train the model
-model.fit_generator(x_train, y_train, batch_size=2048, epochs=500,
-                    validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
+model.fit(x_train, y_train, batch_size=2048, epochs=500,
+          validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
 
 # Save model and weights
 save_dir = os.path.join(os.getcwd(), checkpoint_dir)
