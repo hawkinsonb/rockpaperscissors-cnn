@@ -81,7 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future appLogic(String filePath) async {
-  
+    String res = await Tflite.loadModel(
+        model: "assets/rps.tflite", labels: "assets/labels.txt");
+
     var recognitions = await Tflite.runModelOnImage(
       path: filePath,
     );
