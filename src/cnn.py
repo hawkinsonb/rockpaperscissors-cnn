@@ -14,14 +14,14 @@ from keras.callbacks import ModelCheckpoint
 
 num_channels = 3
 img_size = 128
-input_shape = (num_channels, img_size, img_size)
+input_shape = (img_size, img_size, num_channels)
 
 classes = ['rock', 'paper', 'scissors']
 
 train_path = '../data/augmented'
 checkpoint_dir = "./saved_models"
 
-validation_size = 0.5
+validation_size = 0.4
 
 # load image data and labels
 data = pp.read_train_sets(train_path, img_size, classes,
@@ -47,11 +47,13 @@ model.add(Conv2D(filters=4, kernel_size=(3, 3),
                  padding='same', activation='relu', input_shape=input_shape))
 model.add(Conv2D(filters=8, kernel_size=(3, 3),
                  padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.3))
 model.add(Conv2D(filters=12, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(Conv2D(filters=16, kernel_size=(3, 3),
                  padding='same', activation='relu'))
+model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.3))
 model.add(Conv2D(filters=20, kernel_size=(3, 3),
                  padding='same', activation='relu'))
@@ -80,7 +82,7 @@ if (os.path.isfile(filepath)):
     print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 
 # train the model
-model.fit(x_train, y_train, batch_size=2048, epochs=1000,
+model.fit(x_train, y_train, batch_size=2048, epochs=600,
           validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
 
 # Save model and weights
