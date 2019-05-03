@@ -66,28 +66,6 @@ model.add(Conv2D(filters=8, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 model.add(Dropout(0.4))
-model.add(Conv2D(filters=10, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=1))
-model.add(Conv2D(filters=12, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=1))
-model.add(Dropout(0.4))
-model.add(Conv2D(filters=16, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=1))
-model.add(Conv2D(filters=20, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=1))
-model.add(Dropout(0.6))
-model.add(Conv2D(filters=24, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=1))
-model.add(Conv2D(filters=36, kernel_size=(3, 3),
-                 padding='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=1))
-model.add(Flatten())
-model.add(Dropout(0.8))
 model.add(Dense(128, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
