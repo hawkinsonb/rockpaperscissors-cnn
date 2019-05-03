@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ImageFluxer.decodeImage(new File(filePath).readAsBytesSync());
 
         ImageFluxer.Image smallImage = ImageFluxer.copyResize(img, 128);
-        smallImage = ImageFluxer.normalize(smallImage, 0, 1);
+        smallImage = ImageFluxer.normalize(smallImage, 0, 255);
 
         new File(filePath).writeAsBytesSync(ImageFluxer.encodeJpg(smallImage));
       }
