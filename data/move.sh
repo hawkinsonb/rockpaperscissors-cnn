@@ -1,0 +1,1 @@
+mv ./resized/128/output ./augmented

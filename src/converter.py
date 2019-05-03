@@ -11,4 +11,4 @@ def convert(h5_file):
 
 
 if __name__ == '__main__':
-    convert('./saved_models/rps-flow.h5')
+    convert('./saved_models/rps.h5')

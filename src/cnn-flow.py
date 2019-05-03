@@ -22,7 +22,7 @@ input_shape = (img_size, img_size, num_channels)
 
 classes = ['rock', 'paper', 'scissors']
 
-train_path = '../data/resized/' + str(img_size)
+train_path = '../data/augmented'
 checkpoint_dir = "./saved_models"
 
 
@@ -82,7 +82,8 @@ model.compile(loss='categorical_crossentropy',
               optimizer='rmsprop', metrics=['accuracy'])
 
 filepath = "saved_models/rps-flow.h5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+checkpoint = ModelCheckpoint(
+    filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 
 model.fit_generator(generator=train_flow, validation_data=validation_flow,
