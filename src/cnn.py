@@ -21,7 +21,7 @@ classes = ['rock', 'paper', 'scissors']
 train_path = '../data/resized/' + str(img_size)
 checkpoint_dir = "./saved_models"
 
-validation_size = 0.15
+validation_size = 0.5
 
 # load image data and labels
 data = pp.read_train_sets(train_path, img_size, classes,
@@ -31,36 +31,49 @@ x_train, y_train = data.train._images, data.train._labels
 x_valid, y_valid = data.valid._images, data.valid._labels
 
 # split validation into training and validation sets
-x_test, y_test = x_valid[:50], y_valid[:50]
-x_valid, y_valid = x_valid[50:], y_valid[50:]
+x_test, y_test = x_valid[:500], y_valid[:500]
+x_valid, y_valid = x_valid[500:], y_valid[500:]
+
+filepath = "saved_models/rps.h5"
+checkpoint = ModelCheckpoint(
+    filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+callbacks_list = [checkpoint]
 
 # define the model
 model = Sequential()
-model.add(Conv2D(filters=16, kernel_size=(3,3), padding='same', activation='relu',
+
+# Load checkpoint
+model.load_weights(filepath)
+loss, acc = model.evaluate(x_train, y_train)
+print("Restored model, accuracy: {:5.2f}%".format(100*acc))
+
+model.add(Conv2D(filters=16, kernel_size=(3, 3), padding='same', activation='relu',
                  input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=32, kernel_size=(3,3),
+model.add(Conv2D(filters=32, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=64, kernel_size=(3,3),
+model.add(Conv2D(filters=64, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=128, kernel_size=(3,3),
+model.add(Conv2D(filters=128, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=256, kernel_size=(3,3),
+model.add(Conv2D(filters=256, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=512, kernel_size=(3,3),
+model.add(Conv2D(filters=512, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Conv2D(filters=1024, kernel_size=(3,3),
+model.add(Conv2D(filters=1024, kernel_size=(3, 3),
                  padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=2))
 
-model.add(Dropout(0.4))
+model.
+
+model.add(Dropout(0.2))
 model.add(Flatten())
-model.add(Dropout(0.6))
+model.add(Dropout(0.4))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
@@ -70,8 +83,9 @@ opt = keras.optimizers.RMSprop(lr=1e-04, decay=1e-6)
 model.compile(loss='categorical_crossentropy',
               optimizer=opt, metrics=['accuracy'])
 
-filepath = "saved_models/rps-flow.h5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+filepath = "saved_models/rps.h5"
+checkpoint = ModelCheckpoint(
+    filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 
 # train the model
