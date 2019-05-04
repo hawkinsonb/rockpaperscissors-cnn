@@ -51,6 +51,8 @@ class _CameraState extends State<Camera> {
               bytesList: img.planes.map((plane) {
                 return plane.bytes;
               }).toList(),
+              imageStd: 255.0,
+              imageMean: 0,
               imageHeight: img.height,
               imageWidth: img.width,
               threshold: 0.5

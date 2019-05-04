@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'home.dart';
+import 'package:screen/screen.dart';
 
 List<CameraDescription> cameras;
 
@@ -11,6 +12,8 @@ Future<Null> main() async {
   } on CameraException catch (e) {
     print('Error: $e.code\nError Message: $e.message');
   }
+  
+  Screen.keepOn(true);
   runApp(new MyApp());
 }
 
