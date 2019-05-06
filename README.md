@@ -44,4 +44,11 @@ Let's create the Virtual Environment:
 
 #### To deactivate your venv:
 
-`deactivate`
+`deactivate` 
+
+## Running the App
+#### 1) Install Flutter: https://flutter.dev/
+#### 2) Install Android Studio, Android SDK and the Flutter Plugins: https://medium.com/flutterpub/installing-flutter-in-android-studio-ec135911ceea
+#### 3) Connect your device(Only Android Tested) via usb teathering
+#### 4) Run ```flutter doctor``` to see if you're missing anything, if so resolve those dependecies.
+#### 5) ```flutter run``` within the rps_app or rps_real_time directory and the app will load onto your device.
