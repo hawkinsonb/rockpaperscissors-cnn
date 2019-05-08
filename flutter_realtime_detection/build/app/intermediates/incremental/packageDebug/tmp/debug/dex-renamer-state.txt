@@ -1,0 +1,25 @@
+#Wed May 08 12:24:57 PDT 2019
+path.1=classes.dex
+path.0=classes.dex
+renamed.7=classes8.dex
+renamed.6=classes7.dex
+renamed.5=classes6.dex
+renamed.4=classes5.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.7=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/3
+base.6=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/6
+base.5=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/1
+base.4=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/4
+base.3=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/7
+base.2=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/5
+base.1=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/2
+base.0=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/debug/0
+path.7=classes.dex
+path.6=classes.dex
+path.5=classes.dex
+path.4=classes.dex
+path.3=classes.dex
+path.2=classes.dex
