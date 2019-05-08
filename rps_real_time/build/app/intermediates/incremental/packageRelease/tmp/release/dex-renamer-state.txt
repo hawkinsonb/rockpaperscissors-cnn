@@ -1,4 +1,0 @@
-#Wed May 01 12:29:12 PDT 2019
-base.0=/home/michael/Desktop/481/flutter_realtime_detection/build/app/intermediates/transforms/dexMerger/release/0
-path.0=classes.dex
-renamed.0=classes.dex
