@@ -1,4 +1,4 @@
-# Project PAIRS (Paper Artifical Intelligence Rock Sissors)
+# Project PAIRS (Paper Artifical Intelligence Rock Scissors)
 
 ## CPSC 481 AI Project
 
