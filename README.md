@@ -49,13 +49,13 @@ Let's create the Virtual Environment:
 
 ## Important Files:
 
-#### cnn.py
+#### src/cnn.py
 This is the main file used to train our network and where our CNN architecture can be viewed.
 
 Running this file will result in the creation of a file named *rps.h5* in the *src/saved_models* directory.
 
 
-#### Preprocessor.py
+#### src/Preprocessor.py
 This file contatins the functions used to load and process our data.
 
 The function **read_train_sets** accepts the path to the training images as an argument  
@@ -63,7 +63,7 @@ and generates numpy arrays of image data and one-hot encoded labels. A **DataSet
 defined in the file is used as a simple container and an object of this type is returned
 to the caller.
 
-#### augmentor.py
+#### data/augmentor.py
 
 Used to generate a larger dataset with random augmentations.
 The default values read from our collected images resized to 128 x 128.
