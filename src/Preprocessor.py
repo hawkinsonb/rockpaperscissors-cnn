@@ -43,7 +43,7 @@ class DataSets:
     pass
 
 
-def load_train(train_path, image_size, classes):
+def load_train(train_path, classes):
     images = []
     labels = []
     ids = []
@@ -107,7 +107,7 @@ def read_test_set(test_path, image_size):
 
 def read_train_sets(train_path, image_size, classes, validation_size=0):
     data_sets = DataSets()
-    images, labels, ids, cls = load_train(train_path, image_size, classes)
+    images, labels, ids, cls = load_train(train_path, classes)
     # images, labels, ids, cls = shuffle(images, labels, ids, cls)
 
     if isinstance(validation_size, float):
