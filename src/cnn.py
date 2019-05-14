@@ -18,10 +18,10 @@ input_shape = (img_size, img_size, num_channels)
 
 classes = ['rock', 'paper', 'scissors']
 
-train_path = '../data/augmented'
+train_path = '../data/resized/128'
 checkpoint_dir = "./saved_models"
 
-validation_size = 0.4
+validation_size = 0.25
 
 # load image data and labels
 data = pp.read_train_sets(train_path, img_size, classes,
@@ -31,8 +31,8 @@ x_train, y_train = data.train._images, data.train._labels
 x_valid, y_valid = data.valid._images, data.valid._labels
 
 # split validation into training and validation sets
-x_test, y_test = x_valid[:1000], y_valid[:1000]
-x_valid, y_valid = x_valid[1000:], y_valid[1000:]
+x_test, y_test = x_valid[:50], y_valid[:50]
+x_valid, y_valid = x_valid[50:], y_valid[50:]
 
 filepath = "saved_models/rps.h5"
 checkpoint = ModelCheckpoint(
@@ -82,7 +82,7 @@ if (os.path.isfile(filepath)):
     print("Restored model, accuracy: {:5.2f}%".format(100*acc))
 
 # train the model
-model.fit(x_train, y_train, batch_size=2048, epochs=600,
+model.fit(x_train, y_train, batch_size=256, epochs=200,
           validation_data=(x_valid, y_valid), verbose=1, shuffle=True, callbacks=callbacks_list)
 
 # Save model and weights
